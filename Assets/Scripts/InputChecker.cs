@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class InputChecker : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class InputChecker : MonoBehaviour
             {
                 imageComponent.color = new Color(0.1f, 0.8f, 0.1f, 0.86f);
                 controller.rightAnswers[squareIndex] = true;
+                gameObject.GetComponent<TMP_InputField>().readOnly = true;
             }
             else
             {

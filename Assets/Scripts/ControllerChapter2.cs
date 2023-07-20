@@ -1,16 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class ControllerChapter2 : MonoBehaviour
 {
     [SerializeField] public int towerHeight;
     [SerializeField] private GameObject roof;
+    [SerializeField] private GameObject levelTextObject;
+    public int maxLevels = 2;
+    public int currentLevel;
 
     private GameObject[,] cells;
     private TextMeshPro[,] equations;
+    private GameObject[] results;
     private TextMeshPro roofText;
+    private TMP_Text levelText;
 
 
     private int[] leftNumbers;
@@ -28,10 +34,11 @@ public class ControllerChapter2 : MonoBehaviour
 
     void Start()
     {
+        currentLevel = 1;
         buildLevel();
     }
 
-    private void buildLevel()
+    public void buildLevel()
     {
         dividers = new List<int>();
         dividends = new List<int>();
@@ -39,9 +46,18 @@ public class ControllerChapter2 : MonoBehaviour
         primeNumbers = new HashSet<int> { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67 };
 
         roofText = roof.GetComponentsInChildren<TextMeshPro>()[0];
+        levelText = levelTextObject.GetComponent<TMP_Text>();
         cells = new GameObject[towerHeight, towerWidth];
         equations = new TextMeshPro[towerHeight, towerWidth];
         GameObject[] squares = GameObject.FindGameObjectsWithTag("Cell");
+        results = GameObject.FindGameObjectsWithTag("InputField");
+
+        foreach (GameObject res in results)
+        {
+            res.GetComponent<TMP_InputField>().text = "";
+            res.GetComponent<TMP_InputField>().readOnly = false;
+            res.GetComponent<Image>().color = new Color(0, 0, 0, 0.8627f);
+        }
 
         signs = new char[towerHeight];
         leftNumbers = new int[towerHeight];
@@ -52,6 +68,8 @@ public class ControllerChapter2 : MonoBehaviour
             cells[i / towerWidth, i % towerWidth] = squares[i];
             equations[i / towerWidth, i % towerWidth] = squares[i].GetComponentsInChildren<TextMeshPro>()[0];
         }
+
+        ChangeLevelText();
 
         result = generateResult();
         roofText.text = result.ToString();
@@ -136,5 +154,10 @@ public class ControllerChapter2 : MonoBehaviour
             }
         }
         return tryNumber;
+    }
+
+    public void ChangeLevelText()
+    {
+        levelText.text = "Level: " + currentLevel.ToString();
     }
 }

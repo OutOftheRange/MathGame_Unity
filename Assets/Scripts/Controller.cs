@@ -48,6 +48,7 @@ public class Controller : MonoBehaviour
         foreach (GameObject res in results)
         {
             res.GetComponent<TMP_InputField>().text = "";
+            res.GetComponent<TMP_InputField>().readOnly = false;
             res.GetComponent<Image>().color = new Color(0, 0, 0, 0.8627f);
         }
 

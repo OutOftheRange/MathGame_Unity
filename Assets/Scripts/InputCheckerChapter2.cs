@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class InputCheckerChapter2 : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class InputCheckerChapter2 : MonoBehaviour
     {
         redColor = new Color(0.95f, 0.2f, 0.2f, 0.86f);
     }
+
     public void CheckAnswer(string number)
     {
         int squareIndex = gameObject.name[gameObject.name.Length - 2] - '0';
@@ -31,6 +33,7 @@ public class InputCheckerChapter2 : MonoBehaviour
             {
                 imageComponent.color = new Color(0.1f, 0.8f, 0.1f, 0.86f);
                 controller.rightAnswers[squareIndex] = true;
+                gameObject.GetComponent<TMP_InputField>().readOnly = true;
             }
             else
             {
@@ -58,10 +61,26 @@ public class InputCheckerChapter2 : MonoBehaviour
                 ++countRightAnswers;
             }
         }
+
         if (countRightAnswers == controller.towerHeight)
         {
-            Scene scene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(scene.name);
+            if (controller.currentLevel == controller.maxLevels)
+            {
+                // TODO YOU WON
+                Debug.Log("You won!");
+                controller.currentLevel = 1;
+            }
+            else
+            {
+                ++controller.currentLevel;
+                StartCoroutine(ReloadLevel(1));
+            }
         }
+    }
+
+    IEnumerator ReloadLevel(float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+        controller.buildLevel();
     }
 }
