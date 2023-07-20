@@ -60,8 +60,23 @@ public class InputChecker : MonoBehaviour
         }
         if (countRightAnswers == controller.towerHeight)
         {
-            Scene scene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(scene.name);
+            if (controller.currentLevel == controller.maxLevels)
+            {
+                // TODO YOU WON
+                Debug.Log("You won!");
+                controller.currentLevel = 1;
+            }
+            else
+            {
+                ++controller.currentLevel;
+                StartCoroutine(ReloadLevel(1));
+            }
         }
+    }
+
+    IEnumerator ReloadLevel(float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+        controller.buildLevel();
     }
 }

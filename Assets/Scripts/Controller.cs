@@ -1,16 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class Controller : MonoBehaviour
 {
     [SerializeField] public int towerHeight;
     [SerializeField] private GameObject roof;
+    [SerializeField] private GameObject levelTextObject;
+    public int maxLevels = 2;
+    public int currentLevel;
+
 
     private GameObject[,] cells;
     private TextMeshPro[,] equations;
+    private GameObject[] results;
     private TextMeshPro roofText;
+    private TMP_Text levelText;
 
 
     private int[] leftNumbers;
@@ -25,16 +32,26 @@ public class Controller : MonoBehaviour
 
     void Start()
     {
+        currentLevel = 1;
         buildLevel();
     }
 
-    private void buildLevel()
+    public void buildLevel()
     {
         rightAnswers = new bool[towerHeight];
         roofText = roof.GetComponentsInChildren<TextMeshPro>()[0];
-        cells = new GameObject[towerHeight, towerWidth];
+        levelText = levelTextObject.GetComponent<TMP_Text>();
         equations = new TextMeshPro[towerHeight, towerWidth];
         GameObject[] squares = GameObject.FindGameObjectsWithTag("Cell");
+        results = GameObject.FindGameObjectsWithTag("InputField");
+
+        foreach (GameObject res in results)
+        {
+            res.GetComponent<TMP_InputField>().text = "";
+            res.GetComponent<Image>().color = new Color(0, 0, 0, 0.8627f);
+        }
+
+        ChangeLevelText();
 
         signs = new char[towerHeight];
         leftNumbers = new int[towerHeight];
@@ -42,7 +59,6 @@ public class Controller : MonoBehaviour
 
         for (int i = 0; i < squares.Length; ++i)
         {
-            cells[i / towerWidth, i % towerWidth] = squares[i];
             equations[i / towerWidth, i % towerWidth] = squares[i].GetComponentsInChildren<TextMeshPro>()[0];
         }
 
@@ -80,5 +96,10 @@ public class Controller : MonoBehaviour
             }
         }
         return tryNumber;
+    }
+
+    public void ChangeLevelText()
+    {
+        levelText.text = "Level: " + currentLevel.ToString();
     }
 }
