@@ -4707,6 +4707,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InputField (TMP) (0)
       objectReference: {fileID: 0}
+    - target: {fileID: 6742145183610474603, guid: 1a28592cda3f7304fa609c23308ca4ab, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7687474116516156965, guid: 1a28592cda3f7304fa609c23308ca4ab, type: 3}
       propertyPath: controllerObject
       value: 

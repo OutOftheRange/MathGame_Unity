@@ -9,6 +9,7 @@ using TMPro;
 public class InputChecker : MonoBehaviour
 {
     [SerializeField] private GameObject controllerObject;
+    [SerializeField] private GameManager gameManager;
 
     private Controller controller;
     private Image imageComponent;
@@ -64,9 +65,7 @@ public class InputChecker : MonoBehaviour
         {
             if (controller.currentLevel == controller.maxLevels)
             {
-                // TODO YOU WON
-                Debug.Log("You won!");
-                controller.currentLevel = 1;
+                gameManager.GameOver();
             }
             else
             {

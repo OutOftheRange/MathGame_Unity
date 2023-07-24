@@ -9,7 +9,7 @@ public class ControllerChapter2 : MonoBehaviour
     [SerializeField] public int towerHeight;
     [SerializeField] private GameObject roof;
     [SerializeField] private GameObject levelTextObject;
-    public int maxLevels = 2;
+    public int maxLevels;
     public int currentLevel;
 
     private GameObject[,] cells;
@@ -40,6 +40,7 @@ public class ControllerChapter2 : MonoBehaviour
 
     public void buildLevel()
     {
+        maxLevels = Settings.maxLevels;
         dividers = new List<int>();
         dividends = new List<int>();
         rightAnswers = new bool[towerHeight];

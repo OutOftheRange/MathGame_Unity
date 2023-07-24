@@ -9,7 +9,7 @@ public class Controller : MonoBehaviour
     [SerializeField] public int towerHeight;
     [SerializeField] private GameObject roof;
     [SerializeField] private GameObject levelTextObject;
-    public int maxLevels = 2;
+    public int maxLevels;
     public int currentLevel;
 
 
@@ -38,6 +38,7 @@ public class Controller : MonoBehaviour
 
     public void buildLevel()
     {
+        maxLevels = Settings.maxLevels;
         rightAnswers = new bool[towerHeight];
         roofText = roof.GetComponentsInChildren<TextMeshPro>()[0];
         levelText = levelTextObject.GetComponent<TMP_Text>();
