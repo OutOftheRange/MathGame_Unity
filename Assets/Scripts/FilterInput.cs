@@ -12,6 +12,7 @@ public class FilterInput : MonoBehaviour
     private void Start()
     {
         inputField = GetComponent<TMP_InputField>();
+        inputField.text = Settings.maxLevels.ToString();
     }
 
     public void CheckInput(string number)
