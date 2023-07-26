@@ -17,7 +17,6 @@ public class FilterInput : MonoBehaviour
     public void CheckInput(string number)
     {
         string formattedNumber = number.Replace("-", "");
-
         if (!string.IsNullOrEmpty(formattedNumber))
         {
             while (formattedNumber[0] == '0')
@@ -28,9 +27,13 @@ public class FilterInput : MonoBehaviour
                     break;
                 }
             }
+
+            if (!string.IsNullOrEmpty(formattedNumber))
+            {
+                Settings.maxLevels = Convert.ToInt32(formattedNumber);
+            }
         }
 
-        Settings.maxLevels = Convert.ToInt32(formattedNumber);
         inputField.text = formattedNumber;
     }
 
