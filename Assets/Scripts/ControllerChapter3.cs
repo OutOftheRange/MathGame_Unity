@@ -15,10 +15,12 @@ public class ControllerChapter3 : MonoBehaviour
     private TMP_InputField rightOperand;
     private Operator _operator;
     public TMP_InputField requestedOperand;
+    public string requestedNumber;
     private int maxNumber = 20;
     private int firstNumber;
     private int secondNumber;
     private int result;
+    public bool gameOver = false;
 
     void Start()
     {
@@ -32,8 +34,8 @@ public class ControllerChapter3 : MonoBehaviour
 
     private void LoadLevel()
     {
-        Array govno = Enum.GetValues(typeof(Operator));
-        _operator = (Operator)govno.GetValue(Random.Range(0, govno.Length));
+        Array operatorElements = Enum.GetValues(typeof(Operator));
+        _operator = (Operator)operatorElements.GetValue(Random.Range(0, operatorElements.Length));
 
         result = Random.Range(3, maxNumber + 1);
         firstNumber = Random.Range(1, result);
@@ -43,14 +45,17 @@ public class ControllerChapter3 : MonoBehaviour
         {
             case 0:
                 requestedOperand = leftOperand;
+                requestedNumber = ToRoman(firstNumber);
                 leftOperand.readOnly = false;
                 break;
             case 1:
                 requestedOperand = centerOperand;
+                requestedNumber = ToRoman(secondNumber);
                 centerOperand.readOnly = false;
                 break;
             case 2:
                 requestedOperand = rightOperand;
+                requestedNumber = ToRoman(result);
                 rightOperand.readOnly = false;
                 break;
         }
@@ -80,13 +85,25 @@ public class ControllerChapter3 : MonoBehaviour
             {
                 leftOperand.text = ToRoman(result);
             }
+            else
+            {
+                requestedNumber = ToRoman(result);
+            }
             if (centerOperand.readOnly)
             {
                 centerOperand.text = ToRoman(firstNumber);
             }
+            else
+            {
+                requestedNumber = ToRoman(firstNumber);
+            }
             if (rightOperand.readOnly)
             {
                 rightOperand.text = ToRoman(secondNumber);
+            }
+            else
+            {
+                requestedNumber = ToRoman(secondNumber);
             }
         }
 

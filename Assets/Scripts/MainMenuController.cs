@@ -40,4 +40,9 @@ public class MainMenuController : MonoBehaviour
     {
         SceneManager.LoadScene("Chapter 2");
     }
+
+    public void LoadLevel3()
+    {
+        SceneManager.LoadScene("Chapter 3");
+    }
 }
