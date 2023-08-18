@@ -66,7 +66,7 @@ public class InputChecker : MonoBehaviour
         {
             if (controller.currentLevel == controller.maxLevels)
             {
-                gameManager.GameOver();
+                gameManager.GameOver(true);
             }
             else
             {

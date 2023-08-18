@@ -8,12 +8,14 @@ public class ButtonsControllerChapter3 : MonoBehaviour
     [SerializeField] private GameManager gameManager;
     [SerializeField] private GameObject fireWork;
     private ControllerChapter3 controller;
+    
     private string buttonText;
     private TMP_InputField inputField;
 
     private void Start()
     {
         controller = controllerObject.GetComponent<ControllerChapter3>();
+
         inputField = controller.requestedOperand;
         buttonText = GetComponentInChildren<TMP_Text>().text;
     }
@@ -21,21 +23,26 @@ public class ButtonsControllerChapter3 : MonoBehaviour
     public void Press()
     {
         if (controller.gameOver) return;
-        
+
         inputField.text += buttonText;
         if (!controller.requestedNumber.StartsWith(inputField.text))
         {
             --controller.lifes;
-            Debug.Log(controller.lifes);
-            Debug.Log(controller.hearts.Length);
+            controller.heartsControllers[controller.lifes].StopAnimation();
             controller.hearts[controller.lifes].SetActive(false);
+            if (controller.lifes > 0)
+            {
+                controller.heartsControllers[controller.lifes - 1].StartAnimation();
+            }
+            controller.heartsExplosion[controller.lifes].SetActive(true);
+
             if (controller.lifes <= 0)
             {
                 controller.gameOver = true;
                 gameManager.GameOver();
             }
         }
-        
+
         if (!string.IsNullOrEmpty(inputField.text) && inputField.text == controller.requestedNumber)
         {
             controller.gameOver = true;

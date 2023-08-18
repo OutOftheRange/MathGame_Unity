@@ -9,6 +9,8 @@ public class ControllerChapter3 : MonoBehaviour
 {
     [SerializeField] private GameObject[] equation;
     public GameObject[] hearts;
+    public HeartsAnimation[] heartsControllers;
+    public GameObject[] heartsExplosion;
     private TMP_InputField leftOperand;
     private TMP_Text eqOperator;
     private TMP_InputField centerOperand;
@@ -35,6 +37,14 @@ public class ControllerChapter3 : MonoBehaviour
 
     private void LoadLevel()
     {
+        heartsControllers = new HeartsAnimation [hearts.Length];
+        for (int i = 0; i < hearts.Length; ++i)
+        {
+            heartsControllers[i] = hearts[i].GetComponent<HeartsAnimation>();
+        }
+        
+        heartsControllers[^1].StartAnimation();
+        
         Array operatorElements = Enum.GetValues(typeof(Operator));
         @operator = (Operator)operatorElements.GetValue(Random.Range(0, operatorElements.Length));
 
