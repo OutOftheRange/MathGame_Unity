@@ -1,28 +1,29 @@
 using Enum = System.Enum;
 using Array = System.Array;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Operator = Enums.Operator;
+using Random = UnityEngine.Random;
 
 public class ControllerChapter3 : MonoBehaviour
 {
     [SerializeField] private GameObject[] equation;
+    public GameObject[] hearts;
     private TMP_InputField leftOperand;
     private TMP_Text eqOperator;
     private TMP_InputField centerOperand;
     private TMP_InputField rightOperand;
-    private Operator _operator;
+    private Operator @operator;
     public TMP_InputField requestedOperand;
     public string requestedNumber;
-    private int maxNumber = 20;
+    private const int MaxNumber = 20;
+    public byte lifes = 3;
     private int firstNumber;
     private int secondNumber;
     private int result;
     public bool gameOver = false;
 
-    void Start()
+    private void Start()
     {
         leftOperand = equation[0].GetComponent<TMP_InputField>();
         eqOperator = equation[1].GetComponent<TMP_Text>();
@@ -35,9 +36,9 @@ public class ControllerChapter3 : MonoBehaviour
     private void LoadLevel()
     {
         Array operatorElements = Enum.GetValues(typeof(Operator));
-        _operator = (Operator)operatorElements.GetValue(Random.Range(0, operatorElements.Length));
+        @operator = (Operator)operatorElements.GetValue(Random.Range(0, operatorElements.Length));
 
-        result = Random.Range(3, maxNumber + 1);
+        result = Random.Range(3, MaxNumber + 1);
         firstNumber = Random.Range(1, result);
         secondNumber = result - firstNumber;
 
@@ -60,7 +61,7 @@ public class ControllerChapter3 : MonoBehaviour
                 break;
         }
 
-        if (_operator == Operator.Add)
+        if (@operator == Operator.Add)
         {
             eqOperator.text = "+";
 
@@ -68,10 +69,12 @@ public class ControllerChapter3 : MonoBehaviour
             {
                 leftOperand.text = ToRoman(firstNumber);
             }
+
             if (centerOperand.readOnly)
             {
                 centerOperand.text = ToRoman(secondNumber);
             }
+
             if (rightOperand.readOnly)
             {
                 rightOperand.text = ToRoman(result);
@@ -89,6 +92,7 @@ public class ControllerChapter3 : MonoBehaviour
             {
                 requestedNumber = ToRoman(result);
             }
+
             if (centerOperand.readOnly)
             {
                 centerOperand.text = ToRoman(firstNumber);
@@ -97,6 +101,7 @@ public class ControllerChapter3 : MonoBehaviour
             {
                 requestedNumber = ToRoman(firstNumber);
             }
+
             if (rightOperand.readOnly)
             {
                 rightOperand.text = ToRoman(secondNumber);
@@ -112,13 +117,16 @@ public class ControllerChapter3 : MonoBehaviour
 
     private static string ToRoman(int number)
     {
-        if (number >= 50) return "L" + ToRoman(number - 50);
-        if (number >= 40) return "XL" + ToRoman(number - 40);
-        if (number >= 10) return "X" + ToRoman(number - 10);
-        if (number >= 9) return "IX" + ToRoman(number - 9);
-        if (number >= 5) return "V" + ToRoman(number - 5);
-        if (number >= 4) return "IV" + ToRoman(number - 4);
-        if (number >= 1) return "I" + ToRoman(number - 1);
-        return "";
+        return number switch
+        {
+            >= 50 => "L" + ToRoman(number - 50),
+            >= 40 => "XL" + ToRoman(number - 40),
+            >= 10 => "X" + ToRoman(number - 10),
+            >= 9 => "IX" + ToRoman(number - 9),
+            >= 5 => "V" + ToRoman(number - 5),
+            >= 4 => "IV" + ToRoman(number - 4),
+            >= 1 => "I" + ToRoman(number - 1),
+            _ => ""
+        };
     }
 }

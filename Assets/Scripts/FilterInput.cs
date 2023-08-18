@@ -1,6 +1,3 @@
-using System.Text.RegularExpressions;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 using TMPro;

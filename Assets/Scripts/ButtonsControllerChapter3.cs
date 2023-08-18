@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -21,14 +20,26 @@ public class ButtonsControllerChapter3 : MonoBehaviour
 
     public void Press()
     {
-        if (!controller.gameOver)
+        if (controller.gameOver) return;
+        
+        inputField.text += buttonText;
+        if (!controller.requestedNumber.StartsWith(inputField.text))
         {
-            inputField.text += buttonText;
-            if (!string.IsNullOrEmpty(inputField.text) && inputField.text == controller.requestedNumber)
+            --controller.lifes;
+            Debug.Log(controller.lifes);
+            Debug.Log(controller.hearts.Length);
+            controller.hearts[controller.lifes].SetActive(false);
+            if (controller.lifes <= 0)
             {
                 controller.gameOver = true;
-                StartCoroutine(RunFireWork(1));
+                gameManager.GameOver();
             }
+        }
+        
+        if (!string.IsNullOrEmpty(inputField.text) && inputField.text == controller.requestedNumber)
+        {
+            controller.gameOver = true;
+            StartCoroutine(RunFireWork(1));
         }
     }
 
@@ -44,6 +55,6 @@ public class ButtonsControllerChapter3 : MonoBehaviour
     {
         fireWork.SetActive(true);
         yield return new WaitForSeconds(delayTime);
-        gameManager.GameOver();
+        gameManager.GameOver(true);
     }
 }

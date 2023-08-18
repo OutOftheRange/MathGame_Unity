@@ -1,9 +1,7 @@
 using System.Collections;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using TMPro;
 
 public class InputCheckerChapter2 : MonoBehaviour
@@ -20,6 +18,7 @@ public class InputCheckerChapter2 : MonoBehaviour
         controller = controllerObject.GetComponent<ControllerChapter2>();
         imageComponent = gameObject.GetComponent<Image>();
     }
+
     private void Start()
     {
         redColor = new Color(0.95f, 0.2f, 0.2f, 0.86f);
@@ -27,7 +26,7 @@ public class InputCheckerChapter2 : MonoBehaviour
 
     public void CheckAnswer(string number)
     {
-        int squareIndex = gameObject.name[gameObject.name.Length - 2] - '0';
+        int squareIndex = gameObject.name[^2] - '0';
         if (!string.IsNullOrEmpty(number))
         {
             if (controller.rightNumbers[squareIndex] == Int32.Parse(number))

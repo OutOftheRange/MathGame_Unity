@@ -1,15 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private GameObject gameOverUI;
+    [SerializeField] private GameObject gameOverVictoryUI;
+    [SerializeField] private GameObject gameOverDefeatUI;
 
-    public void GameOver()
+    public void GameOver(bool won = false)
     {
-        gameOverUI.SetActive(true);
+        if (won) gameOverVictoryUI.SetActive(true);
+        else gameOverDefeatUI.SetActive(true);
     }
 
     public void Restart()

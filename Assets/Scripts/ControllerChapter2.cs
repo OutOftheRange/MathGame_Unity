@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -72,41 +71,43 @@ public class ControllerChapter2 : MonoBehaviour
 
         ChangeLevelText();
 
-        result = generateResult();
+        result = GenerateResult();
         roofText.text = result.ToString();
 
-        generateDividers();
-        generateDividends();
+        GenerateDividers();
+        GenerateDividends();
 
         for (int i = 0; i < towerHeight / 2; ++i)
         {
             signs[i] = '*';
-            leftNumbers[i] = generateNumberForMultiplication(i);
+            leftNumbers[i] = GenerateNumberForMultiplication(i);
             rightNumbers[i] = result / leftNumbers[i];
             equations[i, 0].text = leftNumbers[i].ToString();
             equations[i, 1].text = signs[i].ToString();
         }
+
         for (int i = towerHeight / 2; i < towerHeight; ++i)
         {
             signs[i] = '/';
-            leftNumbers[i] = generateNumberForDivision(i);
+            leftNumbers[i] = GenerateNumberForDivision(i);
             rightNumbers[i] = leftNumbers[i] / result;
             equations[i, 0].text = leftNumbers[i].ToString();
             equations[i, 1].text = signs[i].ToString();
         }
     }
 
-    private int generateResult()
+    private int GenerateResult()
     {
         int tryNumber = Random.Range(minResult, maxResult);
         while (primeNumbers.Contains(tryNumber))
         {
             tryNumber = Random.Range(minResult, maxResult);
         }
+
         return tryNumber;
     }
 
-    private void generateDividers()
+    private void GenerateDividers()
     {
         for (int i = 1; i <= Mathf.Sqrt(result); ++i)
         {
@@ -121,7 +122,7 @@ public class ControllerChapter2 : MonoBehaviour
         }
     }
 
-    private void generateDividends()
+    private void GenerateDividends()
     {
         for (int i = 0; i < towerHeight; ++i)
         {
@@ -129,7 +130,7 @@ public class ControllerChapter2 : MonoBehaviour
         }
     }
 
-    private int generateNumberForMultiplication(int index)
+    private int GenerateNumberForMultiplication(int index)
     {
         int tryNumber = dividers[Random.Range(0, dividers.Count)];
         for (int j = 0; j < index; ++j)
@@ -140,10 +141,11 @@ public class ControllerChapter2 : MonoBehaviour
                 j = -1;
             }
         }
+
         return tryNumber;
     }
 
-    private int generateNumberForDivision(int index)
+    private int GenerateNumberForDivision(int index)
     {
         int tryNumber = dividends[Random.Range(0, dividends.Count)];
         for (int j = 0; j < index; ++j)
@@ -154,11 +156,12 @@ public class ControllerChapter2 : MonoBehaviour
                 j = -1;
             }
         }
+
         return tryNumber;
     }
 
-    public void ChangeLevelText()
+    private void ChangeLevelText()
     {
-        levelText.text = "Level: " + currentLevel.ToString();
+        levelText.text = "Level: " + currentLevel;
     }
 }

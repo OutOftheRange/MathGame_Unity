@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
-
     [SerializeField] private GameObject welcomePhrase;
     [SerializeField] private int topBoundary = -120;
     [SerializeField] private int bottomBoundary = -250;
@@ -28,6 +25,7 @@ public class MainMenuController : MonoBehaviour
         {
             direction = -1;
         }
+
         welcomePhraseRectTransform.anchoredPosition += new Vector2(0, direction * speed * Time.deltaTime);
     }
 

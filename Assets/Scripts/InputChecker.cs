@@ -1,9 +1,7 @@
 using System.Collections;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using TMPro;
 
 public class InputChecker : MonoBehaviour
@@ -20,13 +18,15 @@ public class InputChecker : MonoBehaviour
         controller = controllerObject.GetComponent<Controller>();
         imageComponent = gameObject.GetComponent<Image>();
     }
+
     private void Start()
     {
         redColor = new Color(0.95f, 0.2f, 0.2f, 0.86f);
     }
+
     public void CheckAnswer(string number)
     {
-        int squareIndex = gameObject.name[gameObject.name.Length - 2] - '0';
+        int squareIndex = gameObject.name[^2] - '0';
         if (!string.IsNullOrEmpty(number))
         {
             if (controller.rightNumbers[squareIndex] == Int32.Parse(number))
@@ -61,6 +61,7 @@ public class InputChecker : MonoBehaviour
                 ++countRightAnswers;
             }
         }
+
         if (countRightAnswers == controller.towerHeight)
         {
             if (controller.currentLevel == controller.maxLevels)
