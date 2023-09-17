@@ -13,6 +13,8 @@ public class InputCheckerChapter2 : MonoBehaviour
     private Image imageComponent;
     private Color redColor;
 
+    private string lastAttempt;
+
     private void Awake()
     {
         controller = controllerObject.GetComponent<ControllerChapter2>();
@@ -22,6 +24,7 @@ public class InputCheckerChapter2 : MonoBehaviour
     private void Start()
     {
         redColor = new Color(0.95f, 0.2f, 0.2f, 0.86f);
+        lastAttempt = "";
     }
 
     public void CheckAnswer(string number)
@@ -29,6 +32,26 @@ public class InputCheckerChapter2 : MonoBehaviour
         int squareIndex = gameObject.name[^2] - '0';
         if (!string.IsNullOrEmpty(number))
         {
+            if (number.Length > lastAttempt.Length &&
+                !controller.rightNumbers[squareIndex].ToString().StartsWith(number))
+            {
+                --controller.lifes;
+                controller.heartsControllers[controller.lifes].StopAnimation();
+                controller.hearts[controller.lifes].SetActive(false);
+
+                if (controller.lifes > 0)
+                {
+                    controller.heartsControllers[controller.lifes - 1].StartAnimation();
+                }
+                controller.heartsExplosion[controller.lifes].SetActive(true);
+
+                if (controller.lifes <= 0)
+                {
+                    controller.gameOver = true;
+                    gameManager.GameOver();
+                }
+            }
+
             if (controller.rightNumbers[squareIndex] == Int32.Parse(number))
             {
                 imageComponent.color = new Color(0.1f, 0.8f, 0.1f, 0.86f);
@@ -43,6 +66,8 @@ public class InputCheckerChapter2 : MonoBehaviour
                     controller.rightAnswers[squareIndex] = false;
                 }
             }
+
+            lastAttempt = number;
         }
         else
         {
@@ -80,6 +105,6 @@ public class InputCheckerChapter2 : MonoBehaviour
     IEnumerator ReloadLevel(float delayTime)
     {
         yield return new WaitForSeconds(delayTime);
-        controller.buildLevel();
+        controller.BuildLevel();
     }
 }

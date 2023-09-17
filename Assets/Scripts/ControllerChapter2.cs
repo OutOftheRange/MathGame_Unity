@@ -17,6 +17,10 @@ public class ControllerChapter2 : MonoBehaviour
     private TextMeshPro roofText;
     private TMP_Text levelText;
 
+    public byte lifes = 3;
+    public GameObject[] hearts;
+    public HeartsAnimation[] heartsControllers;
+    public GameObject[] heartsExplosion;
 
     private int[] leftNumbers;
     public int[] rightNumbers;
@@ -30,15 +34,25 @@ public class ControllerChapter2 : MonoBehaviour
     private int maxResult = 26;
     private int minResult = 4;
     private int result;
+    
+    public bool gameOver = false;
 
-    void Start()
+    private void Start()
     {
         currentLevel = 1;
-        buildLevel();
+        BuildLevel();
     }
 
-    public void buildLevel()
+    public void BuildLevel()
     {
+        heartsControllers = new HeartsAnimation [hearts.Length];
+        for (int i = 0; i < hearts.Length; ++i)
+        {
+            heartsControllers[i] = hearts[i].GetComponent<HeartsAnimation>();
+        }
+
+        heartsControllers[^1].StartAnimation();
+        
         maxLevels = Settings.maxLevels;
         dividers = new List<int>();
         dividends = new List<int>();
