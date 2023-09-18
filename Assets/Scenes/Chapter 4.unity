@@ -1245,7 +1245,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controllerObject: {fileID: 1668414285}
   speed: 2
-  rightBorder: 800
 --- !u!1 &1154368257
 GameObject:
   m_ObjectHideFlags: 0
@@ -2360,6 +2359,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3991a3b937566d740b209f2895d84bf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stagesObjects:
+  - {fileID: 2118063642}
+  - {fileID: 1836081559}
+  - {fileID: 2144847543}
+  - {fileID: 2059566696}
+  - {fileID: 1812114757}
+  - {fileID: 1324990884}
+  - {fileID: 1157969808}
   knownStages:
   - {fileID: 317327970}
   - {fileID: 2083218493}
@@ -2367,7 +2374,9 @@ MonoBehaviour:
   knownStagesIndexes: 000000000400000006000000
   stagesNumber: 7
   stages: 
-  trainShouldMove: 1
+  trainBorder: 0
+  currentStage: 0
+  currentStageInAllStages: 0
 --- !u!4 &1668414287
 Transform:
   m_ObjectHideFlags: 0
