@@ -14,7 +14,7 @@ public class TrainShouldMove : MonoBehaviour
 
     void Update()
     {
-        if (transform.localPosition.x < controller.trainBorder)
+        if (transform.localPosition.x < controller.trainBorder + 2 * transform.localScale.x)
         {
             transform.Translate(Vector3.right * (speed * Time.deltaTime));
         }
