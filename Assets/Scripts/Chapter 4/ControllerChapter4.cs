@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
@@ -7,9 +8,15 @@ public class ControllerChapter4 : MonoBehaviour
     [SerializeField] private Object[] stagesObjects;
     [SerializeField] private TMP_Text[] knownStages;
     [SerializeField] private int[] knownStagesIndexes;
+    [SerializeField] private GameManager gameManager;
+    [SerializeField] private GameObject fireWork;
+    public GameObject[] hearts;
+    public HeartsAnimation[] heartsControllers;
+    public GameObject[] heartsExplosion;
 
-    [SerializeField] private int stagesNumber = 7;
+    [SerializeField] public int stagesNumber = 7;
     public int[] stages;
+    public byte lifes = 3;
     private const int NumbersBorderRange = 30;
     private const int NumbersRange = 20;
 
@@ -18,6 +25,8 @@ public class ControllerChapter4 : MonoBehaviour
 
     public int currentStageInAllStages = 0;
     private int curKnownIndex = 0;
+    
+    public bool gameOver = false;
 
     private void Start()
     {
@@ -34,6 +43,14 @@ public class ControllerChapter4 : MonoBehaviour
         {
             knownStages[i].text = stages[knownStagesIndexes[i]].ToString();
         }
+        
+        heartsControllers = new HeartsAnimation [hearts.Length];
+        for (int i = 0; i < hearts.Length; ++i)
+        {
+            heartsControllers[i] = hearts[i].GetComponent<HeartsAnimation>();
+        }
+        
+        heartsControllers[^1].StartAnimation();
 
         SetTrainBorder();
     }
@@ -65,9 +82,18 @@ public class ControllerChapter4 : MonoBehaviour
             trainBorder = (int)stagesObjects[currentStageInAllStages].GetComponent<Transform>().localPosition.x;
         }
         
+        if (currentStageInAllStages == stagesNumber - 1)
+        {
+            gameOver = true;
+            StartCoroutine(RunFireWork(1));
+        }
+        
     }
 
-    private void Update()
+    private IEnumerator RunFireWork(float delayTime)
     {
+        fireWork.SetActive(true);
+        yield return new WaitForSeconds(delayTime);
+        gameManager.GameOver(true);
     }
 }

@@ -58,7 +58,7 @@ public class ButtonsControllerChapter3 : MonoBehaviour
         }
     }
 
-    IEnumerator RunFireWork(float delayTime)
+    private IEnumerator RunFireWork(float delayTime)
     {
         fireWork.SetActive(true);
         yield return new WaitForSeconds(delayTime);
